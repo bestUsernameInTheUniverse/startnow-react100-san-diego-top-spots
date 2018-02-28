@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import TopSpot from './topspot';
 var axios = require('axios');
 
 class App extends Component {
@@ -14,21 +15,33 @@ class App extends Component {
     axios
       .get('https://origin-top-spots-api.herokuapp.com/api/topspots')
       .then(response => this.setState({ topSpots: response.data }));
+
   }
 
   render() {
     return (
-      <div className='App'>
+      <div className='App bg-primary'>
         <div className='container'>
-          <div className='card mt-4 border-dark'>
-            <div className='card-body'>
-              <h4>San Diego Top Spots</h4>
-              <p>A list of the top 30 places to see in San Diego, California.</p>
-            </div>
+          <div className='jumbotron bg-white border-dark'>
+            <h1 className="display-4">San Diego Top Spots</h1>
+            <p>A list of the top 30 places to see in San Diego, California.</p>
           </div>
 
-          <pre>{ JSON.stringify(this.state.topSpots, null, 2) }</pre>
+          { 
+            this.state.topSpots.map(ts => (
+              <TopSpot
+                key={ts.id}
+                name={ts.name}
+                description={ts.description}
+                location={ts.location} />
+            ))
+          }
 
+          {/* <div className="card">
+            <div className="card-body">
+              <pre>{ JSON.stringify(this.state.topSpots, null, 2) }</pre>
+            </div>
+          </div> */}
         </div>
       </div>
     );
